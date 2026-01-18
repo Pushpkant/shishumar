@@ -1,0 +1,145 @@
+%introduction
+
+\chapter{Introduction}
+
+The analogue timer is needed to be designed to be used in various industrial applications. The timer designed here is based on a hypothetical situation in an industrial setting where the it receives two inputs SET and RESET based on the input the output should be ON or OFF after some delays. These delays should be configured by using trim pots on the device. The output needs to run a solenoid valve which is controlling a pneumatic actuator to change the direction of air pressure from one pneumatic circuit to another one.
+
+\section{Requirements}
+\label{sec:requirements}
+
+Following are the provided and acquired requirements of the system,
+
+\begin{enumerate}
+\item
+The timer shall be able to drive a solenoid valve of any voltage between 6V-24V.
+\item
+The timer shall be able to drive a solenoid valve having continuous current of 500mA.
+\item
+The timer shall be protected against reverse polarity and over voltage.
+\item
+The timer shall be compatible with differential twisted pair inputs provided to operate the timer.
+\item
+There shall be two inputs one is called {\bf SET} and another is {\bf RESET}.
+\item
+An input shall be treated asserted if the potential between the differential lines goes above 1V. The input shall be treated de-asserted only if the potential goes below 0.8V after assertion.
+\item
+The inputs can handle 100mA continuous current in asserted state. The timer shall never draw more than this amount continuously.
+\item
+There shall be three adjustable timing options, 
+\begin{enumerate}
+\item
+Delay of ON from SET assertion.
+\item
+Delay of OFF from RESET assertion.
+\item
+Depending on the mode delay of OFF from delay time. RESET shall be ignored in this condition.
+\end{enumerate}
+\item
+All the timers shall be tunable through various trim pots. The range for all the timers is between 100ms to 5000ms.
+\item
+A reference ground may be provided in addition to differential twisted pair of the inputs. In such case the reference ground of the timer circuit shall be the reference ground only.
+\item
+There may be following indicators,
+\begin{enumerate}
+\item
+Power Supply Indicator \gls{led}
+\item
+Over Voltage Indicator \gls{led}
+\item
+Output ON indicator \gls{led}
+\item
+Input assert indicator \gls{led}s.
+\end{enumerate}
+\end{enumerate}
+
+\section{Architecture}
+
+As per the requirements discussed in section \ref{sec:requirements}, figure \ref{fig:timer_circuit} shows a top level architecture of the timer. The power supply is both reverse polarity and over voltage protected. The output is capable of handling inductive load upto 24V and 500mA. There are three timers, the delay timer set is timer which turns ON after set time from input SET is asserted. Same for delay timer reset, but it is producing delay after assertion of RESET input. The third delay is delay timer hold, it is generating delay after delay timer set is asserted. Depending upon the mode select delay timer reset and delay timer hold will turn OFF the output while only delay timer set is able to turn ON the output.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\linewidth]{./data/timer_circuit.drawio}
+\caption{Timer Architecture}
+\label{fig:timer_circuit}
+\end{figure}
+
+As a design design we are planning to implement the delays using simple RC circuits. The RC circuits delay is dependent on the input supply thus the timer circuits needs to be run on a constant power supply, but the output might be running on the input supply.
+
+\subsection{RC Circuits}
+
+Consider a circuit as shown in the figure \ref{fig:rc1}. From the circuit the output voltage $V_{out}(t)$ can be expressed as,
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\linewidth]{./data/rc1}
+\caption{RC Circuit for Timing}
+\label{fig:rc1}
+\end{figure}
+
+\begin{align}
+V_{out}(t) &= i(t) X_{c}
+\label{eq:rc1}
+\end{align}
+
+Where the $i(t)$ is the current flowing through the capacitor $C$. The current $i(t)$ can be determined as,
+
+\begin{align}
+i(t) &= \frac{V_{in}(t)}{R + X_{c}}
+\label{eq:rc2}
+\end{align}
+
+From the equation \ref{eq:rc1} and \ref{eq:rc2} the $V_{out}(t)$ can be obtained as,
+
+\begin{align}
+V_{out}(t) &= V_{in}(t) \frac{X_{c}}{R + X_{c}}
+\label{eq:rc3}
+\end{align}
+
+Let $V_{o}(s)$ and $V_{i}(s)$ are output voltage $V_{out}(t)$ and input voltage $V_{in}(t)$ in Laplace domain respectively. In the Laplace domain the capacitive reactance $X_{c} = \frac{1}{sC}$. Thus in Laplace domain the output voltage can be given as,
+
+\begin{align}
+V_{o}(s) &= V_{i}(s) \frac{\frac{1}{sC}}{R + \frac{1}{sC}} \\
+\Rightarrow V_{o}(s) &= V_{i}(s) \frac{1}{1 + RCs} 
+\label{eq:rc4}
+\end{align}
+
+In this timer design the input $V_{in}(t)$ is a step signal, defined as $V_{in}(t) = V_{0} u(t)$\footnote{$u(t)$ is a unit step function. Defined as unity when $t \geq 0$ and zero otherwise.} So the Laplace domain representation is given as follows,
+
+\begin{align}
+V_{i}(s) &= \mathfrak{L}[V_{in}(t)] = V_0 \frac{1}{s}
+\label{eq:rc5}
+\end{align}
+
+Let us assume $RC = \tau$. So from the equation \ref{eq:rc5} and \ref{eq:rc4}. The output can be written as,
+
+\begin{align}
+V_{o}(s) &= \frac{V_{0}}{s} \frac{1}{1 + \tau s} \\
+\Rightarrow V_{o}(s) &= V_{0} \left[ \frac{1}{s} - \frac{1}{\frac{1}{\tau} + s} \right]
+\label{eq:rc6}
+\end{align}
+
+Current in the circuit $I(s) = \mathfrak{L}[i(t)]$ can also be given as follows,
+
+\begin{align}
+I(s) &= \frac{V_{i}(s) - V_{o}(s)}{R}
+\label{eq:rc7}
+\end{align}
+
+From equation \ref{eq:rc7} and \ref{eq:rc6},
+
+\begin{align}
+I(s) &= \frac{V_{0}}{R} \left[ \frac{1}{\frac{1}{\tau} +s} \right]
+\label{eq:rc8}
+\end{align}
+
+Let's take the inverse Laplace transform to get the time domain output voltage and current through the circuit.
+
+\begin{align}
+V_{out}(t) &= \mathfrak{L}^{-1}[V_{o}(s)] \Rightarrow V_0 \left[ 1 - e^{-\frac{t}{\tau}} \right]
+\label{eq:rc9}
+\end{align}
+
+\begin{align}
+i(t) &= \mathfrak{L}^{-1}[I(s)] \Rightarrow \frac{V_0}{R} e^{-\frac{t}{\tau}}
+\label{eq:rc10}
+\end{align}

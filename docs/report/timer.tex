@@ -1,0 +1,242 @@
+\documentclass[11pt]{report}
+
+%\newcommand{\draft}{DRAFT}
+\newcommand{\draft}{ }
+
+\usepackage[paperwidth=9in, paperheight=11in, margin=2.54cm]{geometry}
+\usepackage{enumerate}
+%\usepackage[T1]{fontenc} % Specify font encoding
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+%\usepackage{showframe}
+\usepackage{float}
+\usepackage{pdflscape}
+\usepackage{fmtcount}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{glossaries}
+\usepackage{setspace}
+\usepackage{draftwatermark}
+\usepackage{lmodern}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{pdfpages}
+\usepackage{hyperref} % must be before tabularx
+\usepackage{tabularx}
+\usepackage{booktabs} % For better table lines
+\usepackage{subcaption} % For subcaptions
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Section Number Depth
+%\setcounter{secnumdepth}{3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Watermark
+\SetWatermarkText{\bf \draft}
+\SetWatermarkScale{1}
+\SetWatermarkColor[gray]{0.95}
+\SetWatermarkAngle{45}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Stop producing ugly red boxes around links
+\hypersetup{
+    colorlinks=true,    % false: boxed links; true: colored links
+    linkcolor=black,     % color of internal links
+    citecolor=black,     % color of citation links
+    filecolor=blue,     % color of file links
+    urlcolor=blue       % color of external links
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz-timing}[2014/10/29]
+\usetikztiminglibrary[rising arrows]{clockarrows}
+
+\usepackage{xparse} % NewDocumentCommand, IfValueTF, IFBooleanTF
+
+% Reference a bus.
+%
+% Usage:
+%
+%     \busref[3::0]{C/BE}    ->   C/BE[3::0]
+%     \busref*{AD}           ->   AD#
+%     \busref*[3::0]{C/BE}   ->   C/BE[3::0]#
+%
+%
+%    C/c: clock
+%    U/u: unknown
+%    D/d: multiple values
+%    H/h: hi
+%    L/l: lo
+%
+\NewDocumentCommand{\busref}{som}{\texttt{%
+#3%
+\IfValueTF{#2}{[#2]}{}%
+\IfBooleanTF{#1}{\#}{}%
+}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%		Setting the lstlisting
+\lstset{
+    basicstyle=\ttfamily\setstretch{0.8},
+     keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red},
+    identifierstyle=\color{black},
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=5pt,
+    frame=single,
+    tabsize=4,
+    showspaces=false,
+    showstringspaces=false,
+    captionpos=t,
+    breaklines=true,
+    escapeinside={(*@}{@*)},
+    literate={\ }{{\ }}1 % Replaces spaces with regular spaces
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ohm}{\Omega}
+\newcommand{\unit}[1]{\mathrm{#1}}
+\newcommand{\difrac}[2]{\frac{\mathrm{d}{#1}}{\mathrm{d}{#2}}}
+\newcommand{\diffrac}[2]{\frac{\mathrm{d}}{\mathrm{d}{#2}}{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{ser_no}
+\newcommand{\nsn}{\setcounter{ser_no}{1}\arabic{ser_no}}
+\newcommand{\sn}{\addtocounter{ser_no}{1}\arabic{ser_no}}
+
+\newcounter{ser_no_an}
+\newcommand{\nsna}{\setcounter{ser_no_an}{1}\alph{ser_no_an}}
+\newcommand{\sna}{\addtocounter{ser_no_an}{1}\alph{ser_no_an}}
+
+\newcounter{counter}
+\newcommand{\ncnt}{\setcounter{counter}{1}\arabic{counter}}
+\newcommand{\cnt}{\addtocounter{counter}{1}\arabic{counter}}
+\newcommand{\cntadd}[1]{\addtocounter{counter}{#1}\arabic{counter}}
+
+\newcounter{mem32_map}
+\newcommand{\memadd}[1]{\setcounter{mem32_map}{#1}0x\padzeroes[8]{\HEXADecimal{mem32_map}}}
+\newcommand{\memaddinc}[1]{\addtocounter{mem32_map}{#1}0x\padzeroes[8]{\HEXADecimal{mem32_map}}}
+
+\newcounter{regValue_hex}
+\newcommand{\regValue}[1]{\setcounter{regValue_hex}{#1}0x\padzeroes[8]{\HEXADecimal{regValue_hex}}}
+
+\newcommand{\regValueH}[1]{%
+    \pgfmathparse{int(0x#1)}% Convert hexadecimal to decimal
+    \setcounter{regValue_hex}{\pgfmathresult}% Store the result in the counter
+    0x\padzeroes[8]{\HEXADecimal{regValue_hex}}%
+}
+
+
+
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\lpath}[1]{\textit{\myid/#1}}
+\newcommand{\cconv}{\circledast}
+
+\textwidth=7in
+
+\def\tabularxcolumn#1{m{#1}}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+
+% Command to get only month and year
+\newcommand{\monthyear}{%
+  \ifcase\month\or
+  January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or December\fi~\the\year}
+
+\makeglossaries
+\loadglsentries{gloss}
+
+
+\begin{document}
+\pagenumbering{roman}
+\begin{titlepage}
+\centering
+
+\vfill
+
+{\Huge\bf
+A Project Report}
+
+\vfill
+ON
+\vfill
+
+
+{\Huge\bf
+Analog Timer Design}
+
+\vfill
+
+\includegraphics[width=0.8\linewidth]{./data/river-dolphin-ganga}
+
+{\Large\bf Shishumar}
+
+Project Dolphin -- Wildlife Institute of India\cite{project_dolphin}
+
+\vfill
+
+{\bf Pushpkant Yadav}
+
+\today
+
+\vfill
+
+\end{titlepage}
+
+
+% Front Matter
+%\include{./chapters/<frontmatter_file>}
+\include{./chapters/disclaimer}
+\include{./chapters/shishumar}
+
+%
+\tableofcontents
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+\lstlistoflistings
+\addcontentsline{toc}{chapter}{List of Listing}
+
+\newpage
+\renewcommand{\glossaryname}{Acronym and Glossary}
+\printglossary[nonumberlist]
+\addcontentsline{toc}{chapter}{Acronym and Glossary}
+
+
+\newpage
+\pagenumbering{arabic}
+
+%
+%\include{./chapters/<chapter_file>}
+\include{./chapters/introduction}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\newpage
+
+%\input{./chapters/<appendix_file>}
+
+
+
+\renewcommand{\bibname}{References} 
+\bibliographystyle{plain}
+\bibliography{timer}
+\addcontentsline{toc}{chapter}{References}
+
+\end{document}
