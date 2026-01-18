@@ -1,0 +1,39 @@
+Timer circuit
+
+1. It should take two inputs each of 2V. One is to turn ON the output and another is to turn OFF the Output.
+
+inputs:
+
+1. SET -- Turn ON the output
+2. RESET -- Turn OFF the output
+
+Output:
+
+Turning ON the output --> It will Provide a DC voltage
+Turning OFF the output --> Do not provide DC voltage.
+
+
+Meetings with the Customers:
+
+1. Environment --> Electromagentically noisy environment
+2. Output is acatually driving a solenoid valve --> Controlling a pneumatic actuator
+3. There is turn ON delay. --> Delay after SET is asserted or become 2V. --> Turn ON the output.
+4. There is a turn OFF delay. --> Delay after RESET is asserted or become 2V. --> Turn OFF the output. -->Mode1
+5. There is a hold ON delay --> Delay after output is ON the output becomes OFF --> Mode2
+6. All the delays are configurable. --> Trimp pot.
+
+
+Questions:
+1. What is the part number of the valve?
+2. What kind of noise is there? 
+3. What are the ranges of the delays?
+
+Requirement:
+
+1. output --> 5V/6V/12V/24V also NC/NO.
+2. Inputs are twisted pair. No need to worry about the transient noise.
+3. The intputs are differential.
+4. 100mA Input current maximum.
+5. 1V as assertion at the input.
+6. A reference Ground.
+7. All the delaysa are tunable from 100ms to 5000ms.
