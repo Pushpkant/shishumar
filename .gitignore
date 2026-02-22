@@ -1,0 +1,24 @@
+# Tex temp files
+*.aux
+*.glg
+*.glo
+*.gls
+*.ist
+*.log
+*.out
+*.toc
+*.gz
+*.lot
+*.lol
+*.lof
+*.bbl
+*.blg
+
+# C temp files
+*.o
+
+# office temp files
+.~*
+
+# KiCad Temp Files
+*.lck

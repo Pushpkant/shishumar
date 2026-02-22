@@ -2000,12 +2000,6 @@
 		(uuid "1e30a3bd-e385-4cc5-a397-2ee3c1cfe0f7")
 	)
 	(junction
-		(at 262.89 185.42)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "4363b839-0760-4a72-b1e0-9a839fbd2606")
-	)
-	(junction
 		(at 275.59 82.55)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2102,16 +2096,6 @@
 			(type default)
 		)
 		(uuid "041156d0-369a-44da-89be-3535c07cb14b")
-	)
-	(wire
-		(pts
-			(xy 262.89 198.12) (xy 262.89 200.66)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0808863f-0fa9-41a2-85e9-b1f1ffc2e6d3")
 	)
 	(wire
 		(pts
@@ -2385,16 +2369,6 @@
 	)
 	(wire
 		(pts
-			(xy 246.38 185.42) (xy 251.46 185.42)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4a91e7e1-dbe3-47eb-95ef-e15dab1a8008")
-	)
-	(wire
-		(pts
 			(xy 109.22 166.37) (xy 93.98 166.37)
 		)
 		(stroke
@@ -2402,16 +2376,6 @@
 			(type default)
 		)
 		(uuid "4baa6688-8913-4e01-aa49-0f66303bd06b")
-	)
-	(wire
-		(pts
-			(xy 262.89 185.42) (xy 274.32 185.42)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4c3bb6cb-d432-4726-9de3-a989cda4b1da")
 	)
 	(wire
 		(pts
@@ -2655,16 +2619,6 @@
 	)
 	(wire
 		(pts
-			(xy 262.89 185.42) (xy 262.89 190.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8e7663c0-ac0c-489f-81a0-c1bfd02ce9e5")
-	)
-	(wire
-		(pts
 			(xy 109.22 43.18) (xy 109.22 63.5)
 		)
 		(stroke
@@ -2802,16 +2756,6 @@
 			(type default)
 		)
 		(uuid "b4890b3f-4145-4bef-bf0c-eff7a696c316")
-	)
-	(wire
-		(pts
-			(xy 259.08 185.42) (xy 262.89 185.42)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b74a3893-b5dc-4ea3-a86f-75f1b32aaf22")
 	)
 	(wire
 		(pts
@@ -3087,28 +3031,6 @@
 			)
 		)
 	)
-	(global_label "vin"
-		(shape input)
-		(at 246.38 185.42 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "16a1638c-6cd1-4680-8d3d-d1235bc03859")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 240.6734 185.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "v+5"
 		(shape input)
 		(at 93.98 121.92 90)
@@ -3342,28 +3264,6 @@
 		(uuid "e85e5f42-8702-4f55-aa82-df3f189ea9e9")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 368.3823 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "vout"
-		(shape input)
-		(at 274.32 185.42 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "e945b9ca-b0ab-4a5f-9cea-3ad3ce3fa7e3")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 281.2965 185.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4619,76 +4519,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 262.89 194.31 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "56e7dda2-6171-4be9-9006-df42aabe95cd")
-		(property "Reference" "C108"
-			(at 266.7 193.0399 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "C"
-			(at 266.7 195.5799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 263.8552 198.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 262.89 194.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 262.89 194.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "9cf8140a-fa81-49c3-8095-13d8a6dcec74")
-		)
-		(pin "2"
-			(uuid "9659ca17-798a-4ad9-b3d8-5ec87e9eac74")
-		)
-		(instances
-			(project ""
-				(path "/ceb7b684-bd94-4728-9035-a34e195ab618"
-					(reference "C108")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 302.26 101.6 0)
 		(unit 1)
@@ -5095,74 +4925,6 @@
 			(project "Industrial_timer"
 				(path "/ceb7b684-bd94-4728-9035-a34e195ab618"
 					(reference "R103")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 255.27 185.42 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "825fcf2b-464f-40fc-8ee3-aab88e36666f")
-		(property "Reference" "R113"
-			(at 255.27 179.07 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "R_US"
-			(at 255.27 181.61 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 255.524 184.404 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 255.27 185.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 255.27 185.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "98561666-76f3-49a6-bbf1-9155b24b9f1d")
-		)
-		(pin "1"
-			(uuid "ed804a8b-c28b-49d7-bff8-3756f228fe0a")
-		)
-		(instances
-			(project ""
-				(path "/ceb7b684-bd94-4728-9035-a34e195ab618"
-					(reference "R113")
 					(unit 1)
 				)
 			)
@@ -6491,72 +6253,6 @@
 			(project "Industrial_timer"
 				(path "/ceb7b684-bd94-4728-9035-a34e195ab618"
 					(reference "#PWR0105")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 262.89 200.66 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f85c0a28-d585-476d-bed4-e045efd714c0")
-		(property "Reference" "#PWR0113"
-			(at 262.89 207.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 262.89 205.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 262.89 200.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 262.89 200.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 262.89 200.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "40eac4ce-f642-47b2-ac9a-e348ab8a9dce")
-		)
-		(instances
-			(project "Industrial_timer"
-				(path "/ceb7b684-bd94-4728-9035-a34e195ab618"
-					(reference "#PWR0113")
 					(unit 1)
 				)
 			)
