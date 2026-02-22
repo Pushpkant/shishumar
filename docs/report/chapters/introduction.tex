@@ -1,6 +1,7 @@
 %introduction
 
 \chapter{Introduction}
+\label{ch:introduction}
 
 The analogue timer is needed to be designed to be used in various industrial applications. The timer designed here is based on a hypothetical situation in an industrial setting where the it receives two inputs SET and RESET based on the input the output should be ON or OFF after some delays. These delays should be configured by using trim pots on the device. The output needs to run a solenoid valve which is controlling a pneumatic actuator to change the direction of air pressure from one pneumatic circuit to another one.
 
@@ -66,6 +67,7 @@ As per the requirements discussed in section \ref{sec:requirements}, figure \ref
 As a design design we are planning to implement the delays using simple RC circuits. The RC circuits delay is dependent on the input supply thus the timer circuits needs to be run on a constant power supply, but the output might be running on the input supply.
 
 \subsection{RC Circuits}
+\label{sec:rc_circuit}
 
 Consider a circuit as shown in the figure \ref{fig:rc1}. From the circuit the output voltage $V_{out}(t)$ can be expressed as,
 
@@ -143,3 +145,12 @@ V_{out}(t) &= \mathfrak{L}^{-1}[V_{o}(s)] \Rightarrow V_0 \left[ 1 - e^{-\frac{t
 i(t) &= \mathfrak{L}^{-1}[I(s)] \Rightarrow \frac{V_0}{R} e^{-\frac{t}{\tau}}
 \label{eq:rc10}
 \end{align}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\linewidth]{./data/rc_simulation}
+\caption{Voltage and Current Through RC Circuit}
+\label{fig:rc2}
+\end{figure}
+
+From the equation \ref{eq:rc9} and \ref{eq:rc10} we can observe that the output voltage increases with time and it will reach to $V_0$ at ${\tau} \rightarrow \infty$, similarly the current through the capacitor (also in resistor) is maximum at the starting point and decreasing, it will be zero at $\tau \rightarrow \infty$.  Figure \ref{fig:rc2} shows the simulation with resistance of $10K\ohm$ and capacitor with $10\mu F$. With these values the time constant $\tau = 100m S$.

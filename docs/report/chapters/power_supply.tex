@@ -1,0 +1,88 @@
+%power_supply
+
+\chapter{Power Supply Design}
+\label{ch:power_supply}
+
+As per the requirement shown in \ref{sec:requirements} the timer should be able to run with any potential between 6V and 24V. But we have observed from discussion in section \ref{sec:rc_circuit} that the RC circuit generate a deterministic voltage and current with respect to time for a known voltage $V_0$. Thus we need to operate our timer from a constant power supply irrespective of the input voltage.
+
+\section{Requirements}
+\label{sec:ps_requirements}
+From the discussion and requirement in chapter \ref{ch:introduction} we can deduce the requirement for the power supply.
+
+\begin{enumerate}
+\item
+The power supply should provide a constant voltage output for rest of the circuit. This is essential to generate a consistent delays required by the timer.
+\item
+The power supply must be protected from reverse polarity of the external supply.
+\item
+The output of the timer must be protected from the over voltage.
+\end{enumerate}
+
+\section{Regulated Power}
+\label{sec:ps_regulated_power}
+The regulated power is generated using a liner voltage regulator \verb|SL78M05|. The \gls{ic} generates a constant $5V$ output voltage if the input voltage is higher than $5V$. The output is over voltage is protected approximately $35V$.
+
+
+\section{Reverse Polarity Protection}
+\label{sec:ps_reverse_polarity_protection}
+Reverse polarity protection is implemented using a simple diode in forward bias with the main input supply. When the supply is connected in reverse polarity the diode is in reverse bias and blocks the flow of current. For the purpose we use a diode \verb|1N4007|, the diode is capable of handing $1000V$ and $1A$ continuous forward current.
+
+\section{Over Voltage Protection}
+\label{sec:ps_over_voltage_protection}
+Figure \ref{fig:ps_ov1} shows a comparator used to generate the over voltage protection signal \verb|v_ov|. The signal \verb|v_ov| or $V_{ov}$ is low if potential at pin 1 $V_{1}$ of \verb|LM358| is lower than the potential at pin 2 $V_{2}$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\linewidth]{./data/over_voltage_protection_comparator}
+\caption{Over Voltage Protection Comparator}
+\label{fig:ps_ov1}
+\end{figure}
+
+For \verb|LM358| the input bias current is $45nA$. Thus we need we need current through the resistors $R_{106}$ and $R_{108}$, much higher than the $45nA$ so the effect of loading the \gls{op_amp} is negligible. Potential $V_1$ is kept constant using $5V$ from the voltage regulator. While potential $V_2$ depends on input from power source connected.
+
+As an arbitrary decision we put potential $V_1$ at half of $5V$ or $2.5V$, by keeping $R_{106}$ and $R_{105}$ equal to $10K\ohm$. So current through resister $R_{106}$ will be,
+
+\begin{align}
+i_{r106} = \frac{5V}{10K\ohm + 10K\ohm} = 250\mu A
+\label{eq:ov1}
+\end{align}
+
+Current $i_{r106}$ is much larger than $i_b$ of \verb|LM258|, hence no loading on the reference potential. The potential $V_{pow}$ needs to be at $30V$ when the output $V_{ov}$ goes high to signal over voltage, so potential at $V_2$ should be $V_1 = V_2 = 2.5V$ at this transition. For this we set $r_{107} = 10K\ohm$ and determine $r_{108}$.
+
+\begin{align}
+V_2 &= \frac{V_{pow} r_{108}}{r_{108} + r_{107}} \\
+\Rightarrow r_{108} &= \frac{V_{2} r_{107}}{V_{pow} - V{2}} \\
+\Rightarrow r_{108} &= \frac{2.5V \times 10K\ohm}{30V - 2.5V} \\
+\Rightarrow r_{108} &= 909.9090\ohm 
+\end{align}
+
+We set $r_{108} = 1K\ohm$\footnote{We will increase the resistance to set the over voltage threshold to be lower than calculated.} and recalculate $V_{pow}$ to check what is the actual over voltage.
+
+\begin{align}
+V_2 &= \frac{V_{pow} r_{108}}{r_{108} + r_{107}} \\
+\Rightarrow V_{pow} &= \frac{V_{2} (r_{108} + r_{107})}{r_{108}} \\
+\Rightarrow V_{pow} &= \frac{2.5V (1K\ohm + 10K\ohm)}{1K\ohm} \\
+\Rightarrow V_{pow} &= 27.5V < 30V \\
+\end{align}
+
+The obtained threshold for over voltage protection is less than needed $30V$ but not too much deviation. So we keep the value. Figure \ref{fig:ps_ov_sim} shows the behaviour of comparator. We can observe that at $27.5V$ of \verb|vpow_dc| the \verb|v_ov| switches down signalling over voltage.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\linewidth]{./data/over_voltage_protection_sim}
+\caption{Over Voltage Protection Simulation}
+\label{fig:ps_ov_sim}
+\end{figure}
+
+\section{Conclusion}
+
+Requirement were discussed in section \ref{sec:ps_requirements}, and based on the requirement we have successfully completed the design of Power Supply. The summary of design is as follows,
+
+\begin{enumerate}
+\item
+The power supply is providing constant $5V$ supply for rest of circuit to work suing \verb|SL78M05| Linear voltage regulator \gls{ic}.
+\item
+The power supply is reverse polarity protected using a single diode \verb|IN4007|.
+\item
+The power supply is providing a signal to output of timer for over voltage protection using a comparator.
+\end{enumerate} 
